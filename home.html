@@ -16,30 +16,51 @@
   </style>
  </head>
  <body>
-   <!--form id="person" name="person" method="post" action="/new" >
-   <label>Search for a book</label><input type="text" name="title" id="title" />
-   <input type='submit' value="Fetch this book's cover!" />
-   </form-->
-  
+   <div id="logged_status"><a href="/login">Login</a><a href="/signup">Sign Up</a></div> 
 
    <span>Search for a book</span><input type="text" name="title2" id="title2" />
    <button id ="try" >Fetch this book's cover!</button>
 
-   <div id="choices"></div>
+   <div id="choices"><p id="info"></p><a href="/add" id="add_entry"></a></div>
    <script src="jquery.js"></script>
    <script>
-     function chosen(choice)
+     function chosen(choice,authors,description)
        {
        	  //send to server and store this image
        	  console.log("chosen " + choice);
+          console.dir(authors);
+          console.log("description " + description);
        	  for(var i = 0;i<5;i++)
        	  {
        	  	if(i!==choice) $('#choice-'+i).hide(1000*(1-i*0.2));
        	  }
+          //show data about this book
+          var html = "";
+          html = authors;
+          console.log(html);
+          /*
+          for(var j =1;j<authors.length;j++)
+          {
+            html += ' ' + authors[j];
+          } 
+          */
+          html += '<br>Description: ' + description;
+          $('#info').html(html);
+          $('#add_entry').attr("display","inline");
+
        }
      $(function()
      {
        alert('hello');
+       $('#add_entry').attr("display","none");
+       $.get('/logged_status',function(data)
+       {
+         console.dir(data);
+         if(data !== '')
+         {
+          $('#logged_status').html('Welcome '+data.username);
+         }
+       })
        $('#try').click(function()
        {  
           alert($('#title2').val());
@@ -53,8 +74,8 @@
              if("volumeInfo" in data.items[i] && "imageLinks" in data.items[i].volumeInfo && "thumbnail" in data.items[i].volumeInfo.imageLinks)
              {
               var thumb = data.items[i].volumeInfo.imageLinks.thumbnail;
-              if(i===0) $('#choices').html('<img id="choice-' + i + '" src="' + thumb + '"  onclick="chosen('+i+');"></img>');
-              else $('#choices').append('<img id="choice-' + i + '" src="' + thumb + '" onclick="chosen('+i+');"></img>');
+              if(i===0) $('#choices').html('<img id="choice-' + i + '" src="' + thumb + '"  onclick="chosen('+i+',\''+ data.items[i].volumeInfo.authors[0] +'\',\''+ data.items[i].volumeInfo.description +'\');"></img>');
+              else $('#choices').append('<img id="choice-' + i + '" src="' + thumb + '" onclick="chosen('+i+',"'+ data.items[i].volumeInfo.authors[0] +'","'+ data.items[i].volumeInfo.description +'");"></img>');
              }
             }
             console.log(data);
