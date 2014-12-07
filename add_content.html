@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Image Uploader</title>
+  <style>
+    body
+    {
+      background-image:  url(2.png);
+      background-repeat: repeat;
+    }
+    span
+    {
+      color: white;
+    }
+  </style>
+ </head>
+ <body>
+   <form id="add_content" method="POST" action="/new">
+      <span>What is the book about?</span><div contentEditable="true" id="about" >Enter something</div>
+      <span>What was the one thing you remember from the book read?</span><div contentEditable="true" id="one_thing" >Enter something</div>
+      <span>Was it easy to read?</span><div contentEditable="true" id="easy" >Enter something</div>
+      <span>What was nice about the book?</span><div contentEditable="true" id="nice" >Enter something</div>
+      <span>What could be improved in the book?</span><div contentEditable="true" id="improvement" >Enter something</div>
+      <span>Who will you recommend this to?</span><div contentEditable="true" id="recommend" >Enter something</div>
+      <span>Take home point, if any?</span><div contentEditable="true" id="point" >Enter something</div>
+      <span>Date started</span><div contentEditable="true" id="start_date" >Enter something</div>
+      <span>Date completed</span><div contentEditable="true" id="end_date" >Enter something</div>
+      <input type="submit" value="Update content"></input>
+   </form>
+ </body>
+</html>

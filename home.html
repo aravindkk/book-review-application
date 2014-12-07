@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Image Uploader</title>
+  <style>
+    body
+    {
+      background-image:  url(2.png);
+      background-repeat: repeat;
+    }
+    span
+    {
+      color: white;
+    }
+  </style>
+ </head>
+ <body>
+   <!--form id="person" name="person" method="post" action="/new" >
+   <label>Search for a book</label><input type="text" name="title" id="title" />
+   <input type='submit' value="Fetch this book's cover!" />
+   </form-->
+  
+
+   <span>Search for a book</span><input type="text" name="title2" id="title2" />
+   <button id ="try" >Fetch this book's cover!</button>
+
+   <div id="choices"></div>
+   <script src="jquery.js"></script>
+   <script>
+     function chosen(choice)
+       {
+       	  //send to server and store this image
+       	  console.log("chosen " + choice);
+       	  for(var i = 0;i<5;i++)
+       	  {
+       	  	if(i!==choice) $('#choice-'+i).hide(1000*(1-i*0.2));
+       	  }
+       }
+     $(function()
+     {
+       alert('hello');
+       $('#try').click(function()
+       {  
+          alert($('#title2').val());
+          var end_point = "https://www.googleapis.com/books/v1/volumes"; 
+          $.get(end_point,{q: $('#title2').val(),maxResults:"5",fields:"items(accessInfo/pdf/downloadLink,volumeInfo(authors,description,imageLinks))"},function(data)
+          {
+            alert('ok');
+            console.log(data);
+            for(var i=0; i<5 && i<data.items.length;i++)
+            {
+             if("volumeInfo" in data.items[i] && "imageLinks" in data.items[i].volumeInfo && "thumbnail" in data.items[i].volumeInfo.imageLinks)
+             {
+              var thumb = data.items[i].volumeInfo.imageLinks.thumbnail;
+              if(i===0) $('#choices').html('<img id="choice-' + i + '" src="' + thumb + '"  onclick="chosen('+i+');"></img>');
+              else $('#choices').append('<img id="choice-' + i + '" src="' + thumb + '" onclick="chosen('+i+');"></img>');
+             }
+            }
+            console.log(data);
+          });
+          alert('after get');
+       });
+     });
+   </script>
+ </body>
+</html>
