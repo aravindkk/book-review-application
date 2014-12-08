@@ -69,6 +69,8 @@ var Login_Schema = new mongoose.Schema({
 
 var Book_Schema = new mongoose.Schema({
  name: String,
+ ISBN: String,
+ title: String,
  cover_url: String,
  authors: String,
  start_date: Date,
