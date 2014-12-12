@@ -70,7 +70,7 @@
          console.dir(data);
          if(data !== '')
          {
-          $('#logged_status').html('Welcome '+data.username);
+          $('#logged_status').html('Welcome '+data.username+'<p><a href ="/logout" id = "logout">Logout</a></p>');
          }
        })
        $('#try').click(function()
@@ -83,7 +83,7 @@
             console.log(data);
             for(var i=0; i<5 && i<data.items.length;i++)
             {
-             if("volumeInfo" in data.items[i] && "imageLinks" in data.items[i].volumeInfo && "thumbnail" in data.items[i].volumeInfo.imageLinks)
+             if("volumeInfo" in data.items[i] && "imageLinks" in data.items[i].volumeInfo && "thumbnail" in data.items[i].volumeInfo.imageLinks && "industryIdentifiers" in data.items[i].volumeInfo && "identifier" in data.items[i].volumeInfo.industryIdentifiers[0])
              {
               var thumb = data.items[i].volumeInfo.imageLinks.thumbnail;
               console.log('here it comes');

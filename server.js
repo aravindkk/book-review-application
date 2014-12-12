@@ -155,6 +155,13 @@ app.post('/login',function(req,res)
   });
 });
 
+app.get('/logout',function(req,res)
+{
+  req.session.username = null;
+  req.session.userid = null;
+  res.redirect('/');
+});
+
 app.get('/signup',function(req,res)
 {
 	res.sendfile('signup.html');
@@ -170,7 +177,7 @@ app.post('/signup',function(req,res)
     if(count>0)
     {
       //This Email Id exists already: return error and ask user to select different mail id
-       res.end('Ooops, this mail id exists! Go back and try again.');
+       res.end('<p>Ooops, this mail id exists! Go '+'<a href="/signup">back</a>'+' and try again.</p>');
     }
     else
     {
@@ -214,6 +221,8 @@ app.post('/forgot',function(req,res)
 {
 	//check if this user+email exists, if yes, store new password in db
 	//else report error
+  // generate a dummy secure password for this user, store it in user's password field.
+  // send mail giving a link which when clicked will allow user to set new password
 });
 
 /*
